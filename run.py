@@ -9,7 +9,7 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive"                     # View and manage the entirety of your Google Drive.
     ]
 
-CREDS = Credentials.from_service_account_file('creds.json')    # Authenticating and authorizing: Creates an object that contains credentials.
+CREDS = Credentials.from_service_account_file('creds.json')     # Authenticating and authorizing: Creates an object that contains credentials.
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)                         # Applying scope to credentials:  This takes the credentials you loaded and applies the permissions (or "scopes") you defined earlier. This tells Google, "Hey, I want to use these credentials, and I'm requesting these specific permissions."
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)                # Authorizing with gspread: This uses the gspread library to authorize your script with the scoped credentials. If successful, you'll get a client that can be used to interact with Google Sheets.
 SHEET = GSPREAD_CLIENT.open('love_sandwiches')                  # Opening a Specific Google Sheet: This uses the authorized client to open a Google Sheet named "love_sandwiches". The SHEET object can now be used to read or modify this specific Google Sheet.
@@ -41,6 +41,7 @@ def validate_data(values):
     or if there aren't exactly 6 values.
     """
     try:
+        [int(value) for value in values]
         if len(values) != 6:
                raise ValueError(
                    f"Exactly 6 values required, you provided {len(values)}"
